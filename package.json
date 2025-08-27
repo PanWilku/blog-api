@@ -1,0 +1,21 @@
+{
+  "name": "@blog-api/monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run -w @blog/api dev & npm run -w @blog/user dev & npm run -w @blog/admin dev",
+    "build": "npm run -w @blog/api build && npm run -w @blog/user build && npm run -w @blog/admin build",
+    "start": "npm run -w @blog/api start"
+  },
+  "author": "panwilku",
+  "license": "ISC",
+  "description": "",
+  "engines": {
+    "node": ">=20"
+  }
+}

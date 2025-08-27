@@ -11,6 +11,19 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
+.eslintcache
+
+# Caches / build tools
+.turbo
+.vite
+.cache
+.pnpm-store
+.nyc_output
+coverage
+
+# OS
+Thumbs.db
 
 # Editor directories and files
 .vscode/*

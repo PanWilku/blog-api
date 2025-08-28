@@ -17,5 +17,11 @@
   "description": "",
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19"
   }
 }

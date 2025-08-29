@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+/* Scan the app */
+@source "./**/*.{html,ts,tsx}";
+
+/* Scan the shared UI package (note the extra ../) */
+@source "../../../packages/ui/src/**/*.{ts,tsx}";

@@ -20,7 +20,6 @@ export function SignIn({ logoSrc }: { logoSrc?: string }) {
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm/6 font-medium text-gray-100">Password</label>
                                 <div className="text-sm">
-                                    <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300">Forgot password?</a>
                                 </div>
                             </div>
                             <div className="mt-2">
@@ -35,7 +34,7 @@ export function SignIn({ logoSrc }: { logoSrc?: string }) {
 
                     <p className="mt-10 text-center text-sm/6 text-gray-400">
                         Not a member?
-                        <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300">Start a 14 day free trial</a>
+                        <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300"> Create an account</a>
                     </p>
                 </div>
             </div>

@@ -12,11 +12,9 @@ export default function App() {
   }, []);
 
   return <>
-    <html className="h-full bg-gray-900">
-      <body className="h-full">
-        <SignIn logoSrc="/blog.svg" />
+      <div className="flex-col w-full min-h-screen bg-gray-900 justify-center">
+        <SignIn logoSrc="/blog.svg"/>
         <h1 className="text-2xl font-bold text-green-500">{msg}</h1>
-      </body>
-    </html>
+      </div>
   </>;
 }

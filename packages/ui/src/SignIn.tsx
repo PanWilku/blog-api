@@ -1,4 +1,10 @@
-export function SignIn({ logoSrc }: { logoSrc?: string }) {
+type SignInProps = {
+    logoSrc?: string;
+    links: string[];
+}
+
+
+export function SignIn({ logoSrc, links }: SignInProps) {
     return (
         <>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -34,7 +40,7 @@ export function SignIn({ logoSrc }: { logoSrc?: string }) {
 
                     <p className="mt-10 text-center text-sm/6 text-gray-400">
                         Not a member?
-                        <a href="#" className="font-semibold text-indigo-400 hover:text-indigo-300"> Create an account</a>
+                        <a href={links[0]} className="font-semibold text-indigo-400 hover:text-indigo-300"> Create an account</a>
                     </p>
                 </div>
             </div>

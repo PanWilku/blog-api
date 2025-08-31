@@ -11,19 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-*.tsbuildinfo
-.eslintcache
-
-# Caches / build tools
-.turbo
-.vite
-.cache
-.pnpm-store
-.nyc_output
-coverage
-
-# OS
-Thumbs.db
 
 # Editor directories and files
 .vscode/*
@@ -35,8 +22,3 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-
-# Environment files (keep example templates tracked)
-**/.env
-**/.env.*
-!**/.env.example

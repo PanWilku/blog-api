@@ -1,8 +1,9 @@
+import './style.css'
+import { SignIn, SignUp } from "@blog/ui"
+import { Routes, Route } from "react-router-dom";
 
-import { SignIn } from "@blog/ui";
 import { useEffect, useState } from "react";
-import { api } from "../lib/api";
-
+import { api, API_URL } from "../lib/api";
 
 export default function App() {
   const [msg, setMsg] = useState<string>("loading...");
@@ -12,9 +13,11 @@ export default function App() {
   }, []);
 
   return <>
-      <div className="flex-col w-full min-h-screen bg-gray-900 justify-center">
-        <SignIn logoSrc="/blog.svg"/>
-        <h1 className="text-2xl font-bold text-green-500">{msg}</h1>
-      </div>
+    <div className="flex w-full min-h-screen p-4 bg-gray-900 justify-center items-center ">
+      <Routes>
+        <Route path="/" element={<SignIn logoSrc="/blog.svg" links={["/sign-up"]} />} />
+        <Route path="/sign-up" element={<SignUp logoSrc="/blog.svg" links={["/"]} action={`${API_URL}/sign-up`} />} />
+      </Routes>
+    </div>
   </>;
 }

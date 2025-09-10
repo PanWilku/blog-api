@@ -1,36 +1,43 @@
 import { Router } from "express";
 import bcrypt from "bcrypt"
 import prisma from "../db/db.js";
+// @ts-ignore
+import { generateToken } from "../../lib/jwt.js";
 
 const router = Router();
 
 router.post("/", async (req, res) => {
 
-    console.log("Hello from post!!!")
-
-    if(req.body) {
-    await prisma.user.findUnique({
-        where: {
-            email: req.body.email
-        }
-    })
-    console.log("db connection!")
+    if(!req.body.email || !req.body.password || !req.body.confirmPassword) {
+        return res.status(400).json({ error: "Missing required fields" });
     }
 
+    const { email, password, confirmPassword, name} = req.body;
 
-    const { email, password, confirmPassword} = req.body;
-
-    if (password.length < 6) {
-        return res.status(400).json({ error: "Password must be at least 6 characters long" });
-    } else if (password !== confirmPassword) {
+    if(password !== confirmPassword) {
         return res.status(400).json({ error: "Passwords do not match" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 11);
+    const existingUser = await prisma.user.findUnique({
+        where: { email}
+    })
+    if(existingUser) {
+        return res.status(400).json({ error: "User already exists" });
+    }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    console.log(req.body);
-    res.json({ message: "User signed up" });
+    const user = await prisma.user.create({
+        data: {
+            email,
+            passwordHash: hashedPassword,
+            name,
+        }
+    })
+
+    //generate a token
+    const token = generateToken(user);
+    res.json({ token });
 });
 
 const signUpRouter = router;

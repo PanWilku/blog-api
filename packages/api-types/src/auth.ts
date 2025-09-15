@@ -1,13 +1,19 @@
 export interface LoginRequest {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface LoginResponse {
-    token: string;
-    user: {
-        id: number;
-        name: string;
-        role: "ADMIN" | "AUTHOR" | "USER";
-    };
+  token: string;
+  user: {
+    id: number;
+    name: string;
+    role: "ADMIN" | "AUTHOR" | "USER";
+  };
+}
+
+export interface User {
+  id: number;
+  email: string;
+  name: string;
 }

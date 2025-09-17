@@ -37,8 +37,11 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   "esModuleInterop": true,
-  "allowSyntheticDefaultImports": true
+  "allowSyntheticDefaultImports": true,
+  "emitDeclarationOnly": true,
+  "allowImportingTsExtensions": true,
+  "typeRoots": ["./node_modules/@types", "./src/types"]
   },
- "include": ["src/**/*.ts"],           // ✅ only compile files under src
-  "exclude": ["dist", "node_modules", "src/generated"]   // ✅ ignore build output and deps
+ "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
+  "exclude": ["dist", "node_modules", "src/generated"]
 }

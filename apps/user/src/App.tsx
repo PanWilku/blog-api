@@ -1,5 +1,5 @@
 import "./style.css";
-import { SignIn, SignUp, Blog } from "@blog/ui";
+import { SignIn, SignUp, Blog, Post } from "@blog/ui";
 import { Routes, Route } from "react-router-dom";
 import { API_URL } from "../lib/api";
 
@@ -20,6 +20,7 @@ export default function App() {
             path="/blog"
             element={<Blog logoSrc="/blog.svg" apiUrl={API_URL} />}
           />
+          <Route path="/post/:postid" element={<Post apiUrl={API_URL} />} />
         </Routes>
       </div>
     </>

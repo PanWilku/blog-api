@@ -1,10 +1,10 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import signUpRouter from "./router/signUpRouter";
-import signInRouter from "./router/signInRouter";
-import blogRouter from "./router/blog";
-import postsRouter from "./router/posts";
+import signUpRouter from "./router/signUpRouter.ts";
+import signInRouter from "./router/signInRouter.ts";
+import blogRouter from "./router/blog.ts";
+import postsRouter from "./router/posts.ts";
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.get("/", (_req, res) => {
 app.use("/sign-up", signUpRouter);
 app.use("/sign-in", signInRouter);
 app.use("/blog", blogRouter);
-app.use("/posts", postsRouter);
+app.use("/post", postsRouter);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () =>

@@ -196,6 +196,7 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
             >
               Sign Out
             </button>
+            <button onClick={() => navigate("/post/1")}>Go to Post 1</button>
           </div>
         </div>
       </div>

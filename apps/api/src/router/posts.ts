@@ -8,11 +8,27 @@ const router = Router();
 router.get("/", auth(true), async (req, res) => {
   console.log("req.user:", req.user);
   try {
-    console.log("Posts route reached successfully");
     const posts = await prisma.post.findMany();
-    console.log("route reached");
     console.log(posts);
     res.json({ posts: posts });
+  } catch (error) {
+    console.error("Posts route error:", error);
+    res.status(500).json({ error: "Failed to fetch posts" });
+  }
+});
+
+//get a post by id
+router.get("/:postid", auth(true), async (req, res) => {
+  console.log("req.user:", req.user);
+  try {
+    console.log("Posts route reached successfully");
+    const post = await prisma.post.findUnique({
+      where: { id: Number(req.params.postid) },
+      include: { comments: true, author: true },
+    });
+    console.log("route reached");
+    console.log(post);
+    res.json({ post: post });
   } catch (error) {
     console.error("Posts route error:", error);
     res.status(500).json({ error: "Failed to fetch posts" });

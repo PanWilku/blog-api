@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { PostCard } from "./PostCard";
 
 type BlogProps = {
   logoSrc?: string;
@@ -13,24 +14,11 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
   const [user, setUser] = useState<any>(null); // Separate state for user
   const [posts, setPosts] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 5;
+  const postsPerPage = 9;
 
   useEffect(() => {
     const fetchBlog = async () => {
       const token = localStorage.getItem("token");
-
-      // Debug: Check if token exists and decode it
-      if (token) {
-        try {
-          const payload = JSON.parse(atob(token.split(".")[1]));
-          console.log("Token payload:", payload);
-          console.log("Token expires at:", new Date(payload.exp * 1000));
-          console.log("Current time:", new Date());
-          console.log("Token expired?", payload.exp * 1000 < Date.now());
-        } catch (e) {
-          console.log("Error decoding token:", e);
-        }
-      }
 
       // If no token, redirect to sign in
       if (!token) {
@@ -52,8 +40,9 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
 
         if (response.ok) {
           setMessage(data.message);
-          setUser(data.user); // Set user data separately
-          console.log("User data received:", data.user); // Add this debug line
+          setUser(data.user);
+          console.log(data.user);
+          setPosts(data.posts || []); // Add this line
           setError("");
         } else if (response.status === 401) {
           // Token expired or invalid - clear it and redirect to login
@@ -76,36 +65,16 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
   }, [navigate, apiUrl]);
 
   // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     const token = localStorage.getItem("token");
-  //     if (!token) return;
 
-  //     try {
-  //       const response = await fetch(
-  //         `${apiUrl}/posts?page=${currentPage}&limit=${postsPerPage}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
+  //   try {
+  //     const response = await fetch(`${apiUrl}/blog?page=${currentPage}&limit=${postsPerPage}`)
+  //     const data = await response.json();
+  //     setPosts(data.posts);
+  //   } catch (error) {
+  //     setError("Failed to fetch posts");
+  //   }
 
-  //       const data = await response.json();
-
-  //       if (response.ok) {
-  //         setPosts(data.posts || []);
-  //       } else {
-  //         setError(data.error || "Failed to fetch posts");
-  //       }
-  //     } catch (err) {
-  //       setError("Network error while fetching posts.");
-  //     }
-  //   };
-
-  //   fetchPosts();
-  // }, [currentPage, apiUrl]);
+  // }, [currentPage]);
 
   const totalPages = Math.ceil(posts.length / postsPerPage);
 
@@ -144,15 +113,7 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
           {/* Posts Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {posts.map((post) => (
-              <div key={post.id} className="bg-white shadow-md rounded-lg p-4">
-                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                <p className="text-gray-700">
-                  {post.content?.substring(0, 100)}...
-                </p>
-                <button className="mt-2 text-blue-500 hover:underline">
-                  Read More
-                </button>
-              </div>
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
 
@@ -169,8 +130,9 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
               Page {currentPage} of {totalPages}
             </span>
             <button
-              onClick={() =>
-                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              onClick={
+                () => setCurrentPage(Math.min(totalPages, currentPage + 1))
+                // fetchNextPosts()
               }
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"

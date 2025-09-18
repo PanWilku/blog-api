@@ -17,6 +17,22 @@ router.get("/", auth(true), async (req, res) => {
   }
 });
 
+router.get("/paginate", auth(true), async (req, res) => {
+  try {
+    const page = parseInt(String(req.query.page), 10);
+    const limit = parseInt(String(req.query.limit), 10);
+
+    const posts = await prisma.post.findMany({
+      where: {},
+    });
+    console.log(posts);
+    res.json({ posts: posts });
+  } catch (error) {
+    console.error("Posts route error:", error);
+    res.status(500).json({ error: "Failed to fetch posts" });
+  }
+});
+
 //get a post by id
 router.get("/:postid", auth(true), async (req, res) => {
   console.log("req.user:", req.user);

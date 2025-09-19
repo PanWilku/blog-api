@@ -28,6 +28,7 @@ router.post("/:postid", auth(true), async (req, res) => {
         postId: Number(req.params.postid),
         authorId: req.user!.id,
       },
+      include: { author: true },
     });
     res.status(201).json({ comment: newComment });
   } catch (error) {

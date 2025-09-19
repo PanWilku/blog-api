@@ -5,6 +5,7 @@ import signUpRouter from "./router/signUpRouter.ts";
 import signInRouter from "./router/signInRouter.ts";
 import blogRouter from "./router/blog.ts";
 import postsRouter from "./router/posts.ts";
+import commentRouter from "./router/comment.ts";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/sign-up", signUpRouter);
 app.use("/sign-in", signInRouter);
 app.use("/blog", blogRouter);
 app.use("/post", postsRouter);
+app.use("/comment", commentRouter);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () =>

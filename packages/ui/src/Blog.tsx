@@ -14,7 +14,8 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
   const [user, setUser] = useState<any>(null); // Separate state for user
   const [posts, setPosts] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 9;
+  const postsPerPage = 10;
+  const [totalPostsCount, setTotalPostsCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -28,22 +29,26 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
       }
 
       try {
-        const response = await fetch(`${apiUrl}/blog`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${apiUrl}/blog?page=${currentPage}&limit=${postsPerPage}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await response.json();
-
         if (response.ok) {
           setMessage(data.message);
           setUser(data.user);
           console.log(data.user);
-          setPosts(data.posts || []); // Add this line
+          setPosts(data.posts || []);
+          setTotalPostsCount(data.totalPostsCount || 0);
           setError("");
+        } else if (response.status === 401) {
         } else if (response.status === 401) {
           // Token expired or invalid - clear it and redirect to login
           localStorage.removeItem("token");
@@ -62,7 +67,7 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
     };
 
     fetchBlog();
-  }, [navigate, apiUrl]);
+  }, [navigate, apiUrl, currentPage]);
 
   // useEffect(() => {
 
@@ -74,9 +79,7 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
   //     setError("Failed to fetch posts");
   //   }
 
-  // }, [currentPage]);
-
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const totalPages = Math.max(1, Math.ceil(totalPostsCount / postsPerPage));
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -130,10 +133,7 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
               Page {currentPage} of {totalPages}
             </span>
             <button
-              onClick={
-                () => setCurrentPage(Math.min(totalPages, currentPage + 1))
-                // fetchNextPosts()
-              }
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
             >

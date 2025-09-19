@@ -37,7 +37,7 @@ export function PostCard({ post }: any) {
                   {post.createdAt
                     ? new Date(post.createdAt).toLocaleDateString()
                     : "Unknown date"}{" "}
-                  · 5 min read
+                  · {Math.ceil(post.content.length / 100)} min read
                 </div>
               </div>
             </div>

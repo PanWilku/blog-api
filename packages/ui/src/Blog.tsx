@@ -69,16 +69,6 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
     fetchBlog();
   }, [navigate, apiUrl, currentPage]);
 
-  // useEffect(() => {
-
-  //   try {
-  //     const response = await fetch(`${apiUrl}/blog?page=${currentPage}&limit=${postsPerPage}`)
-  //     const data = await response.json();
-  //     setPosts(data.posts);
-  //   } catch (error) {
-  //     setError("Failed to fetch posts");
-  //   }
-
   const totalPages = Math.max(1, Math.ceil(totalPostsCount / postsPerPage));
 
   return (
@@ -86,20 +76,8 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
       {/* 3-column layout: 1/5 - 3/5 - 1/5 */}
       <div className="grid grid-cols-5 gap-4 min-h-screen">
         {/* Left Sidebar - 1/5 width */}
-        <div className="col-span-1 bg-gray-800 p-4 rounded-lg">
+        <div className="col-span-1 bg-gray-800 p-4 rounded-lg justify-center flex">
           <img src={logoSrc} alt="Your Company" className="h-16 w-auto mb-4" />
-          <nav className="space-y-2">
-            <div className="text-gray-300 text-sm font-medium">Navigation</div>
-            <button className="block w-full text-left text-gray-400 hover:text-white py-1">
-              Dashboard
-            </button>
-            <button className="block w-full text-left text-gray-400 hover:text-white py-1">
-              Posts
-            </button>
-            <button className="block w-full text-left text-gray-400 hover:text-white py-1">
-              Settings
-            </button>
-          </nav>
         </div>
 
         {/* Main Content - 3/5 width */}
@@ -154,11 +132,13 @@ export function Blog({ logoSrc, apiUrl }: BlogProps) {
                 localStorage.removeItem("token");
                 navigate("/");
               }}
-              className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+              className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm cursor-pointer"
             >
               Sign Out
             </button>
-            <button onClick={() => navigate("/post/1")}>Go to Post 1</button>
+            <button className="block w-full text-left text-gray-400 hover:text-white py-1 cursor-pointer">
+              Settings
+            </button>
           </div>
         </div>
       </div>

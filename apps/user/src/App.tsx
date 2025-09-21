@@ -1,5 +1,5 @@
 import "./style.css";
-import { SignIn, SignUp, Blog, Post, PostCard } from "@blog/ui";
+import { SignIn, SignUp, Blog, Post } from "@blog/ui";
 import { Routes, Route } from "react-router-dom";
 import { API_URL } from "../lib/api";
 
@@ -21,10 +21,6 @@ export default function App() {
             element={
               <>
                 <Blog logoSrc="/blog.svg" apiUrl={API_URL} />
-                <PostCard
-                  img="https://via.placeholder.com/800x400?text=Post+Cover"
-                  title="Post Title"
-                />
               </>
             }
           />

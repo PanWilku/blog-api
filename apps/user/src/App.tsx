@@ -6,7 +6,7 @@ import { API_URL } from "../lib/api";
 export default function App() {
   return (
     <>
-      <div className="flex w-full min-h-screen p-4 bg-gray-900 ">
+      <div className="flex w-full min-h-screen p-4 bg-gray-900">
         <Routes>
           <Route
             path="/"

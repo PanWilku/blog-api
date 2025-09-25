@@ -8,7 +8,7 @@ export function PostCard({ post }: any) {
     <>
       <article className="rounded-lg shadow-sm overflow-hidden border bg-white">
         <img
-          src="https://picsum.photos/400/200"
+          src={post.imgUrl}
           alt="Post cover"
           className="w-full h-48 object-cover"
         />
@@ -25,7 +25,7 @@ export function PostCard({ post }: any) {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img
-                src="https://picsum.photos/40"
+                src={post.author?.avatarUrl}
                 alt="Author avatar"
                 className="w-10 h-10 rounded-full mr-3"
               />

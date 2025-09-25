@@ -29,10 +29,17 @@ export function Dashboard({ apiUrl }: DashboardProps) {
   const postsPerPage = 5; // Add this
   const [totalPostsCount, setTotalPostsCount] = useState<number>(0); // Add this
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/";
+    }
+  }, []);
+
   // Fetch posts on component mount
   useEffect(() => {
     fetchPosts();
-  }, [currentPage]); // Add currentPage dependency
+  }, [currentPage]);
 
   const fetchPosts = async () => {
     try {
@@ -180,7 +187,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
           <button
             onClick={() => {
               localStorage.removeItem("token");
-              window.location.href = "/login";
+              window.location.href = "/";
             }}
             className="bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer"
           >
@@ -321,11 +328,11 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                           </div>
                         </div>
 
-                        <div className="flex items-center space-x-2 ml-4">
+                        <div className="flex items-center ml-4 h-full max-lg:flex-wrap gap-2 max-lg:justify-end">
                           {!post.published && (
                             <button
                               onClick={() => handlePublish(post.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors cursor-pointer"
+                              className="inline-flex w-20 items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors cursor-pointer"
                             >
                               <svg
                                 className="w-3 h-3 mr-1"
@@ -347,7 +354,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                           {post.published && (
                             <button
                               onClick={() => handleUnpublish(post.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors cursor-pointer"
+                              className="inline-flex w-20 items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors cursor-pointer"
                             >
                               Unpublish
                             </button>
@@ -355,7 +362,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
 
                           <button
                             onClick={() => handleDelete(post.id)}
-                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors cursor-pointer"
+                            className="inline-flex w-20 items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors cursor-pointer"
                           >
                             <svg
                               className="w-3 h-3 mr-1"

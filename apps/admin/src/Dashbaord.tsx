@@ -104,8 +104,8 @@ export function Dashboard({ apiUrl }: DashboardProps) {
   const handlePublish = async (postId: number) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${apiUrl}/admin/posts/${postId}/publish`, {
-        method: "PATCH",
+      const response = await fetch(`${apiUrl}/admin/publish/${postId}`, {
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -125,16 +125,13 @@ export function Dashboard({ apiUrl }: DashboardProps) {
   const handleUnpublish = async (postId: number) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `${apiUrl}/admin/posts/${postId}/unpublish`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${apiUrl}/admin/unpublish/${postId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) throw new Error("Failed to unpublish post");
 
@@ -151,7 +148,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${apiUrl}/admin/posts/${postId}`, {
+      const response = await fetch(`${apiUrl}/admin/deletepost/${postId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -316,12 +313,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                           </p>
 
                           <div className="flex items-center text-xs text-gray-500 space-x-4">
-                            <span>
-                              By{" "}
-                              {post.author?.name ||
-                                post.author?.email ||
-                                "Unknown"}
-                            </span>
+                            <span>By {post.author?.name}</span>
                             <span>•</span>
                             <span>
                               {new Date(post.createdAt).toLocaleDateString()}

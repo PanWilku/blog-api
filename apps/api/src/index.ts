@@ -6,14 +6,14 @@ import signInRouter from "./router/signInRouter.ts";
 import blogRouter from "./router/blog.ts";
 import postsRouter from "./router/posts.ts";
 import commentRouter from "./router/comment.ts";
-import createPostRouter from "./router/createpost.ts";
+import adminRouter from "./router/adminRouter.ts";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: process.env.FRONTEND_URL }));
+app.use(cors({ origin: /^http:\/\/localhost:\d+$/, credentials: true }));
 
 app.get("/", (_req, res) => {
   res.json({ message: "Hello from the API" });
@@ -24,7 +24,7 @@ app.use("/sign-in", signInRouter);
 app.use("/blog", blogRouter);
 app.use("/post", postsRouter);
 app.use("/comment", commentRouter);
-app.use("/admin", createPostRouter);
+app.use("/admin", adminRouter);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () =>

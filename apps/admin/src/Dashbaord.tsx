@@ -38,7 +38,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${apiUrl}/blog?page=${currentPage}&limit=${postsPerPage}`, // Use pagination params
+        `${apiUrl}/post?page=${currentPage}&limit=${postsPerPage}`, // Use pagination params
         {
           method: "GET", // Move method to the correct place
           headers: {
@@ -72,7 +72,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${apiUrl}/admin/posts`, {
+      const response = await fetch(`${apiUrl}/admin/createpost`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -185,7 +185,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
               localStorage.removeItem("token");
               window.location.href = "/login";
             }}
-            className="bg-red-600 text-white px-4 py-2 rounded-md"
+            className="bg-red-600 text-white px-4 py-2 rounded-md cursor-pointer"
           >
             Logout
           </button>
@@ -265,7 +265,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 >
                   {loading ? "Creating..." : "Create Post"}
                 </button>
@@ -333,7 +333,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                           {!post.published && (
                             <button
                               onClick={() => handlePublish(post.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors cursor-pointer"
                             >
                               <svg
                                 className="w-3 h-3 mr-1"
@@ -355,7 +355,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                           {post.published && (
                             <button
                               onClick={() => handleUnpublish(post.id)}
-                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
+                              className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors cursor-pointer"
                             >
                               Unpublish
                             </button>
@@ -363,7 +363,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
 
                           <button
                             onClick={() => handleDelete(post.id)}
-                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors cursor-pointer"
                           >
                             <svg
                               className="w-3 h-3 mr-1"
@@ -396,7 +396,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                         setCurrentPage(Math.max(1, currentPage - 1))
                       }
                       disabled={currentPage === 1}
-                      className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                     >
                       Previous
                     </button>
@@ -410,7 +410,7 @@ export function Dashboard({ apiUrl }: DashboardProps) {
                         setCurrentPage((p) => Math.min(totalPages, p + 1))
                       }
                       disabled={currentPage === totalPages}
-                      className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                     >
                       Next
                     </button>

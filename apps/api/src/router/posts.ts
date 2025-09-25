@@ -7,11 +7,29 @@ const router = Router();
 
 //get all posts endpoint
 router.get("/", auth(true), async (req, res) => {
+  const params = req.query;
   console.log("req.user:", req.user);
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      skip:
+        ((params.page ? parseInt(params.page as string) : 1) - 1) *
+        (params.limit ? parseInt(params.limit as string) : 10),
+      take: params.limit ? parseInt(params.limit as string) : 10,
+      include: {
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
+      },
+      orderBy: { id: "desc" },
+    });
+
+    const totalPostsCount = await prisma.post.count();
+
     console.log(posts);
-    res.json({ posts: posts });
+    res.json({ posts: posts, totalPostsCount: totalPostsCount });
   } catch (error) {
     console.error("Posts route error:", error);
     res.status(500).json({ error: "Failed to fetch posts" });

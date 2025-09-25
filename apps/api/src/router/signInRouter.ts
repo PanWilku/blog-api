@@ -22,7 +22,35 @@ router.post("/", async (req, res) => {
     return res.json({
       message: "Logged in",
       user: { id: user.id, email: user.email, name: user.name },
-      token
+      token,
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/admin", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ error: "Missing credentials" });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
+    const ok = await bcrypt.compare(password, user.passwordHash);
+    if (!ok) return res.status(401).json({ error: "Invalid credentials" });
+
+    if (user.role !== "admin") {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const token = generateToken(user);
+    return res.json({
+      message: "Logged in",
+      user: { id: user.id, email: user.email, name: user.name },
+      token,
     });
   } catch (e) {
     console.error(e);

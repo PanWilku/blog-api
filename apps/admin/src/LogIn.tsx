@@ -27,7 +27,7 @@ export function LogIn({ apiUrl }: SignInProps) {
     };
 
     try {
-      const response = await fetch(`${apiUrl}/sign-in`, {
+      const response = await fetch(`${apiUrl}/sign-in/admin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,8 +43,8 @@ export function LogIn({ apiUrl }: SignInProps) {
         // Save token to localStorage
         localStorage.setItem("token", result.token);
 
-        // Navigate to blog on success
-        navigate("/blog");
+        // Navigate to dashboard on success
+        navigate("/dashboard");
       }
     } catch (err) {
       setError("Network error. Please try again.");

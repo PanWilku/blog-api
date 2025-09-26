@@ -31,7 +31,7 @@ export function Post({ apiUrl }: PostProps) {
         const data = await response.json();
         setPost(data.post);
       } catch (error) {
-        setError(error.message);
+        setError(error instanceof Error ? error.message : "An error occurred");
       } finally {
         setLoading(false);
       }

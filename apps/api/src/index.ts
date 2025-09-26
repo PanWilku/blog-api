@@ -1,12 +1,12 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import signUpRouter from "./router/signUpRouter.ts";
-import signInRouter from "./router/signInRouter.ts";
-import blogRouter from "./router/blog.ts";
-import postsRouter from "./router/posts.ts";
-import commentRouter from "./router/comment.ts";
-import adminRouter from "./router/adminRouter.ts";
+import signUpRouter from "./router/signUpRouter.js";
+import signInRouter from "./router/signInRouter.js";
+import blogRouter from "./router/blog.js";
+import postsRouter from "./router/posts.js";
+import commentRouter from "./router/comment.js";
+import adminRouter from "./router/adminRouter.js";
 
 const app = express();
 

@@ -1,7 +1,7 @@
 // @ts-ignore
 import { auth } from "../../lib/auth.js";
 import { Router } from "express";
-import prisma from "../db/db.ts";
+import prisma from "../db/db.js"; // Changed .ts to .js
 
 const router = Router();
 

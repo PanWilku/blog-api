@@ -38,8 +38,6 @@
     "skipLibCheck": true,
   "esModuleInterop": true,
   "allowSyntheticDefaultImports": true,
-  "emitDeclarationOnly": true,
-  "allowImportingTsExtensions": true,
   "typeRoots": ["./node_modules/@types", "./src/types"]
   },
  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],

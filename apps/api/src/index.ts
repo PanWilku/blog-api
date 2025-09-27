@@ -37,25 +37,41 @@ app.use("/comment", commentRouter);
 app.use("/admin", adminRouter);
 
 const port = process.env.PORT || 3001;
-const server = app.listen(port, () =>
+const server = app.listen(port, "0.0.0.0", () => {
   console.log(
-    `API listening. Corsed apps are: ${process.env.FRONTEND_URL} and ${process.env.ADMIN_URL}`
-  )
-);
-
-// Handle graceful shutdown
-process.on("SIGTERM", () => {
-  console.log("SIGTERM received, shutting down gracefully");
-  server.close(() => {
-    console.log("Server closed");
-    process.exit(0);
-  });
+    `API listening on port ${port}. CORS enabled for: ${process.env.FRONTEND_URL} and ${process.env.ADMIN_URL}`
+  );
 });
 
-process.on("SIGINT", () => {
-  console.log("SIGINT received, shutting down gracefully");
-  server.close(() => {
-    console.log("Server closed");
+// Improved graceful shutdown
+const gracefulShutdown = (signal: string) => {
+  console.log(`${signal} received, shutting down gracefully`);
+  server.close((err) => {
+    if (err) {
+      console.error("Error during server shutdown:", err);
+      process.exit(1);
+    }
+    console.log("Server closed successfully");
     process.exit(0);
   });
+
+  // Force shutdown after 10 seconds
+  setTimeout(() => {
+    console.log("Forcing shutdown after timeout");
+    process.exit(1);
+  }, 10000);
+};
+
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+
+// Handle uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  process.exit(1);
 });

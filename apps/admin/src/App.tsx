@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { API_URL } from "./../../user/lib/api";
+import { API_URL } from "../lib/api";
 import { LogIn } from "./LogIn";
 import { Dashboard } from "./Dashbaord";
 

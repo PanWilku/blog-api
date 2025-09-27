@@ -13,7 +13,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: /^http:\/\/localhost:\d+$/, credentials: true }));
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === "production"
+      ? ([process.env.FRONTEND_URL, process.env.ADMIN_URL].filter(
+          Boolean
+        ) as string[]) // Remove undefined values
+      : /^http:\/\/localhost:\d+$/,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.get("/", (_req, res) => {
   res.json({ message: "Hello from the API" });

@@ -37,8 +37,17 @@ app.use("/comment", commentRouter);
 app.use("/admin", adminRouter);
 
 const port = process.env.PORT || 3001;
-app.listen(port, () =>
+const server = app.listen(port, () =>
   console.log(
-    `API listening on http://localhost:${port} App running at http://localhost:5173`
+    `API listening. Corsed apps are: ${process.env.FRONTEND_URL} and ${process.env.ADMIN_URL}`
   )
 );
+
+// Handle graceful shutdown
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully");
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+});

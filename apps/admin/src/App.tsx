@@ -1,16 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import { SignIn } from "@blog/ui";
-import { API_URL } from "../lib/api";
+import { API_URL } from "./../../user/lib/api";
+import { LogIn } from "./LogIn";
+import { Dashboard } from "./Dashbaord";
 
 export default function App() {
   return (
-    <div className="flex w-full min-h-screen bg-gray-900 justify-center">
-      <Routes>
-        <Route
-          path="/"
-          element={<SignIn logoSrc="/blog.svg" apiUrl={API_URL} />}
-        />
-      </Routes>
-    </div>
+    <>
+      <div className="flex h-screen bg-gray-600">
+        <Routes>
+          <Route path="/" element={<LogIn apiUrl={API_URL} />} />
+          <Route path="/dashboard" element={<Dashboard apiUrl={API_URL} />} />
+        </Routes>
+      </div>
+    </>
   );
 }

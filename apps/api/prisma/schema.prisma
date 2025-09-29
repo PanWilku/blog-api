@@ -35,10 +35,11 @@ model Post {
 }
 
 model Comment {
-  id       Int    @id @default(autoincrement())
-  content  String
-  authorId Int
-  postId   Int
-  author   User   @relation(fields: [authorId], references: [id])
-  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id        Int      @id @default(autoincrement())
+  content   String
+  authorId  Int
+  postId    Int
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
